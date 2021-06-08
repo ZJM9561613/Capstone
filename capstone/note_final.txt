@@ -1,0 +1,55 @@
+
+%%电脑的密码
+20212021
+
+%%连接树梅派
+ssh pi@192.168.3.105
+
+%% 启动ros
+roscore
+
+%% 树莓派的密码
+123
+
+
+%% 开启相机 
+roslaunch raspicam_node camerav2_1280x960_10fps.launch 
+
+%% 开启机器人 
+roslaunch turtlebot3_bringup turtlebot3_robot.launch
+
+
+
+
+%%ar tag 姿态显示
+rostopic echo /ar_pose_marker
+
+
+%%发声节点
+rosrun sound_play soundplay_node.py
+
+%% ar tag 姿态估计
+roslaunch ar_track_alvar alvar.launch
+
+%% 发声检测
+rosrun beginner_tutorials listener.py
+
+
+%%直接控制机器人的速度
+rostopic pub /cmd_vel geometry_msgs/Twist -r 10 [0.0,0.0,0.0] [0.0,0.0,0.0]
+
+Execute Navigation
+$ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+
+
+%%发送目标点
+rosrun simple_navigation_goals simple_navigation_goals.py
+
+
+%% 输出位置信息 
+rostopic echo /amcl_pose
+
+
+
+
+
